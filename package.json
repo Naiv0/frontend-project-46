@@ -1,0 +1,26 @@
+{
+  "name": "@hexlet/code",
+  "version": "0.0.1",
+  "description": "Compares two configuration files and shows a difference",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Naiv0/frontend-project-46.git"
+  },
+  "author": "Naiv0 aka Demid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Naiv0/frontend-project-46/issues"
+  },
+  "homepage": "https://github.com/Naiv0/frontend-project-46#readme",
+  "dependencies": {
+    "commander": "^10.0.0"
+  }
+}
