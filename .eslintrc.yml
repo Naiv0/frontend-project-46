@@ -2,7 +2,7 @@ env:
   node: true
   es2021: true
 
-plugins:
+plugins: 
   - jest
 
 extends: 
@@ -12,8 +12,8 @@ extends:
 parserOptions:
   ecmaVersion: latest
   sourceType: module
+
 rules:
   no-console: 0
   import/extentions: 0
-
 
