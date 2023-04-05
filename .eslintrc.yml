@@ -1,7 +1,7 @@
 env:
   node: true
   es2021: true
-  
+
 plugins: 
   - jest
 
@@ -15,5 +15,5 @@ parserOptions:
 
 rules: {
   "no-console": "off", 
-  "import/extentions": "off"
+  "import/extensions": "off"
 }
