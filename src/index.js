@@ -1,5 +1,5 @@
-import _ from 'loadash';
-import { getPath, getDataFromPath } from './util.js';
+import _ from 'lodash';
+import { getDataFromPath, getPath } from './util.js';
 
 const genDiff = (path1, path2) => {
   const data1 = getDataFromPath(getPath(path1));

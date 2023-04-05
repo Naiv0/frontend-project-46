@@ -1,7 +1,7 @@
 env:
   node: true
   es2021: true
-
+  
 plugins: 
   - jest
 
@@ -13,7 +13,7 @@ parserOptions:
   ecmaVersion: latest
   sourceType: module
 
-rules:
-  no-console: 0
-  import/extentions: 0
-
+rules: {
+  "no-console": "off", 
+  "import/extentions": "off"
+}
