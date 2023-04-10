@@ -25,6 +25,6 @@ const genDiff = (path1, path2) => {
   return rendered;
 };
 
-console.log(genDiff('__fixtures__/file1.json/', '__fixtures__/file2.json/'));
+console.log(genDiff('__fixtures__/file1.json/', '__fixtures__/file2.json/')); // test
 
 export default genDiff;
