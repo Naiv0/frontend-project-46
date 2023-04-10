@@ -20,11 +20,8 @@ const genDiff = (path1, path2) => {
     }
     return { key, type: 'unchanged', value: data2[key] };
   });
-  // console.log(diff);
   const rendered = render(diff);
   return rendered;
 };
-
-console.log(genDiff('__fixtures__/file1.json/', '__fixtures__/file2.json/')); // test
 
 export default genDiff;
