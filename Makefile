@@ -9,3 +9,5 @@ publish:
 
 lintFix: 
 	npx eslint . --fix
+firstTest: 
+	node index.js
