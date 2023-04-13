@@ -1,5 +1,7 @@
 import _ from 'lodash';
-import { getDataFromPath, getPath, render } from './util.js';
+import getDataFromPath from './utils/getData.js';
+import getPath from './utils/getPath.js';
+import render from './utils/render.js';
 
 const genDiff = (path1, path2) => {
   const data1 = getDataFromPath(getPath(path1));

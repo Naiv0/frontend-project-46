@@ -1,11 +1,11 @@
 import { fileURLToPath } from 'url';
-import * as path from 'path';
+import path from 'path';
 import { readFileSync } from 'fs';
 import { describe, test, expect } from '@jest/globals';
 import genDiff from '../src/index.js';
 
 const fileNamee = fileURLToPath(import.meta.url);
-const dirName = path.dirName(fileNamee);
+const dirName = path.dirname(fileNamee);
 const getFixturePath = (filename) => path.join(dirName, '..', '__fixtures__', filename);
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 

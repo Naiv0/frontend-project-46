@@ -1,16 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-
-const getDataFromPath = (generatedPath) => {
-  const data = JSON.parse(fs.readFileSync(generatedPath), 'utf-8');
-  return data;
-};
-
-const getPath = (transferredPath) => {
-  const gPath = path.resolve((process.cwd(), transferredPath));
-  return gPath;
-};
-
 const render = (differencies) => {
   const rend = differencies.reduce((acc, elem) => {
     const { key } = elem;
@@ -35,8 +22,4 @@ const render = (differencies) => {
   return `{\n${rend}}`;
 };
 
-export {
-  getDataFromPath,
-  getPath,
-  render,
-};
+export default render;
