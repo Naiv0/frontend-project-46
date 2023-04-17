@@ -1,16 +1,9 @@
-import fs from 'fs';
 import yaml from 'js-yaml';
 
-const getDataFromPath = (generatedPath) => {
-  if (generatedPath.endsWith('.json')) {
-    const data = JSON.parse(fs.readFileSync(generatedPath), 'utf-8');
-    return data;
-  }
-  if (generatedPath.endsWith('.yaml') || generatedPath.endsWith('.yml')) {
-    const data = yaml.load(fs.readFileSync(generatedPath), 'utf-8');
-    return data;
-  }
-  return console.log('Unexpected file extentions!');
+const parsers = {
+  json: JSON.parse,
+  yaml: yaml.load,
+  yml: yaml.load,
 };
 
-export default getDataFromPath;
+export default (data, format) => parsers[format](data);

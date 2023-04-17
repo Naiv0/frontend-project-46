@@ -24,4 +24,11 @@ describe('genDiff', () => {
     const result = genDiff(filePath1, filePath2);
     expect(result).toEqual(plainResult);
   });
+  test('difference between trees', () => {
+    const filePath1 = getFixturePath('filepath1.json');
+    const filePath2 = getFixturePath('filepath2.json');
+    const plainResult = readFile('expected_tree.json');
+    const result = genDiff(filePath1, filePath2);
+    expect(result).toEqual(plainResult);
+  });
 });
