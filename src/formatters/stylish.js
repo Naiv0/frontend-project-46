@@ -1,34 +1,37 @@
 import _ from 'lodash';
 
-const indent = (deep, spaceCount = 4) => ' '.repeat(deep * spaceCount - 2);
+const indent = (depth, spaceCount = 4) => ' '.repeat(depth * spaceCount - 2);
 
-const stringify = (data, deep, mapping) => {
+const stringify = (data, depth, mapping) => {
   if (!_.isObject(data)) {
+    if (data === '') {
+      return data;
+    }
     return String(data);
   }
-
   const output = Object.entries(data)
-    .map(([key, value]) => mapping.unchanged({ key, value }, deep + 1));
-  return `{\n${output.join('\n')}\n${indent(deep)}  }`;
+    .map(([key, value]) => `${mapping.unchanged({ key, value }, depth + 1)}`);
+
+  return `{\n${output.join('\n')}\n${indent(depth)}  }`;
 };
 
 const mapping = {
-  root: ({ children }, deep, iter) => {
-    const output = children.flatMap((node) => mapping[node.type](node, deep + 1, iter));
+  root: ({ children }, depth, iter) => {
+    const output = children.flatMap((node) => mapping[node.type](node, depth + 1, iter));
     return `{\n${output.join('\n')}\n}`;
   },
-  nested: ({ key, children }, deep, iter) => {
-    const output = children.flatMap((node) => mapping[node.type](node, deep + 1, iter));
-    return `${indent(deep)}  ${key}: {\n${output.join('\n')}\n${indent(deep)}}`;
+  nested: ({ key, children }, depth, iter) => {
+    const output = children.flatMap((node) => mapping[node.type](node, depth + 1, iter));
+    return `${indent(depth)}  ${key}: {\n${output.join('\n')}\n${indent(depth)}  }`;
   },
-  added: (node, deep) => `${indent(deep)}+ ${node.key}: ${stringify(node, deep, mapping)}`,
-  deleted: (node, deep) => `${indent(deep)}- ${node.key}: ${stringify(node, deep, mapping)}`,
-  unchanged: (node, deep) => `${indent(deep)}  ${node.key}: ${stringify(node, deep, mapping)}`,
-  changed: (node, deep) => {
+  added: (node, depth) => `${indent(depth)}+ ${node.key}: ${stringify(node.value, depth, mapping)}`,
+  deleted: (node, depth) => `${indent(depth)}- ${node.key}: ${stringify(node.value, depth, mapping)}`,
+  unchanged: (node, depth) => `${indent(depth)}  ${node.key}: ${stringify(node.value, depth, mapping)}`,
+  changed: (node, depth) => {
     const { key, value1, value2 } = node;
 
-    const data1 = `${indent(deep)}- ${key}: ${stringify(value1, deep, mapping)}`;
-    const data2 = `${indent(deep)}+ ${key}: ${stringify(value2, deep, mapping)}`;
+    const data1 = `${indent(depth)}- ${key}: ${stringify(value1, depth, mapping)}`;
+    const data2 = `${indent(depth)}+ ${key}: ${stringify(value2, depth, mapping)}`;
     return [data1, data2];
   },
 };

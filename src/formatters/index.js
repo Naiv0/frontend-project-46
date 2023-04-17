@@ -1,7 +1,7 @@
-import formatStylish from './stylish.js';
+import render from './stylish.js';
 
 const formtatters = {
-  stylish: formatStylish,
+  stylish: render,
   plain: '',
   json: JSON.stringify,
 };

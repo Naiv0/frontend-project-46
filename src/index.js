@@ -1,10 +1,12 @@
-import getPath from './utils/getPath.js';
+import path from 'path';
+import fs from 'fs';
 import treeBuild from './treeBuilder.js';
-import getData from './utils/getData.js';
-import parscer from './utils/parscer.js';
 import format from './formatters/index.js';
+import parse from './utils/parscer.js';
 
-const extractFormat = (filepath) => parscer.extname(filepath).slice(1);
+const getPath = (filepath) => path.resolve(process.cwd(), filepath);
+const extractFormat = (filepath) => path.extname(filepath).slice(1);
+const getData = (filepath) => parse(fs.readFileSync(filepath, 'utf-8'), extractFormat(filepath));
 
 const genDiff = (path1, path2, formatName = 'stylish') => {
   const data1 = getData(getPath(path1));

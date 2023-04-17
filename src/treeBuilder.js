@@ -26,4 +26,7 @@ const treeBuild = (data1, data2) => {
   return diff;
 };
 
-export default treeBuild;
+export default (data1, data2) => ({
+  type: 'root',
+  children: treeBuild(data1, data2),
+});
