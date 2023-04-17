@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import getDataFromPath from './utils/getData.js';
+import getDataFromPath from './utils/parscer.js';
 import getPath from './utils/getPath.js';
 import render from './utils/render.js';
 

@@ -17,4 +17,11 @@ describe('genDiff', () => {
     const result = genDiff(filePath1, filePath2);
     expect(result).toEqual(plainResult);
   });
+  test('difference from plain yaml', () => {
+    const filePath1 = getFixturePath('file1.yaml');
+    const filePath2 = getFixturePath('file2.yaml');
+    const plainResult = readFile('expected_plain.yaml');
+    const result = genDiff(filePath1, filePath2);
+    expect(result).toEqual(plainResult);
+  });
 });
