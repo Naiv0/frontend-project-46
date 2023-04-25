@@ -1,15 +1,14 @@
-import render from './stylish.js';
+import makeStylish from './stylish.js';
 
-const formtatters = {
-  stylish: render,
-  plain: '',
-  json: JSON.stringify,
-};
+// const formtatters = {
+//   stylish: render,
+//   plain: '',
+//   json: JSON.stringify,
+// };
 
-export default (ast, type) => {
-  const format = formtatters[type];
+export default (ast, format) => {
   if (!format) {
-    throw new Error(`Unknown format ${type}`);
+    throw new Error(`Unknown format ${format}`);
   }
-  return format(ast);
+  return makeStylish(ast);
 };
