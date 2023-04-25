@@ -12,6 +12,6 @@ lintFix:
 firstTest: 
 	node index.js
 test:
-	NODE_OPTIONS=--experimental-vm-modules npx jest
+	 npx jest
 test-coverage:
 	npx jest --coverage	

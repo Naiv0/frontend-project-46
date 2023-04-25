@@ -3,53 +3,51 @@ import _ from 'lodash';
 
 const indent = (depth, spaceCount = 4) => ' '.repeat(depth * spaceCount - 2);
 
+const stringify = (lines) => {
+  const newLines = lines.join('');
+
+  return `{${newLines}\n}`;
+};
+
 const makeStylish = (ast) => {
   console.log('ast', ast);
-
   const iter = (node, depth = 0) => {
     switch (node.type) {
       case 'root': {
         const output = node.children.flatMap((child) => iter(child, depth + 1));
+        return stringify(output);
       }
       case 'added': {
-        console.log('added');
-        console.log(node);
+        return `\n  + ${node.key}: ${node.value}`;
       }
+
       case 'deleted': {
-        console.log('deleted');
-        console.log(node);
+        return `\n  - ${node.key}: ${node.value}`;
       }
-      case 'changed': {
-        console.log('changed');
-        console.log(node);
+
+      case 'edited': {
+        return `\n  - ${node.key}: ${node.value1}\n  + ${node.key}: ${node.value2}`;
       }
+
       case 'unchanged': {
-        console.log('unchanged');
-        console.log(node);
+        return `\n    ${node.key}: ${node.value}`;
       }
+
       case 'nested': {
-        console.log('nested');
-        console.log(node.children);
+        const output = node.children.flatMap((child) => iter(child, depth + 1));
+        console.log(output);
+        return stringify(output);
       }
       default: {
-        console.log(111, node);
+        return console.log(111, node);
       }
     }
   };
+
   return iter(ast);
 };
 
 export default makeStylish;
-
-const stringify = (data, depth) => {
-  if (!_.isObject(data) || data === null) {
-    return String(data);
-  }
-  const output = Object.entries(data)
-    .map(([key, value]) => `${mapping.unchanged({ key, value }, depth + 1)}`);
-
-  return `{\n${output.join('\n')}\n${indent(depth)}  }`;
-};
 
 // const mapping = {
 //   root: ({ children }, depth, iter) => {
