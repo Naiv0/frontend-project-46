@@ -3,17 +3,21 @@ import _ from 'lodash';
 
 const indent = (depth, spaceCount = 4) => ' '.repeat(depth * spaceCount - 2);
 
-const joinStrings = (lines, depth) => [`{${[...lines]}${indent(depth)}}`].join('\n');
+const joinStrings = (lines, depth) => [
+  '{',
+  ...lines,
+  `${indent(depth)}}`,
+].join('\n');
 
-const stringify = (data, depth) => {
+function stringify(data, depth) {
   if ((!_.isObject(data) || (data === null))) {
     return String(data);
   }
   const keys = _.keys(data);
-  const lines = keys.map((key) => `${indent(depth)}  ${key}: ${stringify(data[key], depth + 1)}`);
+  const lines = keys.map((key) => `${indent(depth)}  ${stringify(data[key], depth + 1)}`);
   console.log(lines);
   return joinStrings(lines, depth);
-};
+}
 
 const makeStylish = (ast) => {
   console.log('ast', ast);
@@ -24,22 +28,22 @@ const makeStylish = (ast) => {
         return stringify(output);
       }
       case 'added': {
-        const output = `\n  + ${node.key}: ${node.value}`;
+        const output = `+ ${node.key}: ${node.value}`;
         return stringify(output);
       }
 
       case 'deleted': {
-        const output = `\n  - ${node.key}: ${node.value}`;
+        const output = `- ${node.key}: ${node.value}`;
         return stringify(output);
       }
 
       case 'edited': {
-        const output = `\n  - ${node.key}: ${node.value1}\n  + ${node.key}: ${node.value2}`;
+        const output = `- ${node.key}: ${node.value1}\n  + ${node.key}: ${node.value2}`;
         return stringify(output);
       }
 
       case 'unchanged': {
-        const output = `\n    ${node.key}: ${node.value}`;
+        const output = `  ${node.key}: ${node.value}`;
         return stringify(output);
       }
 
