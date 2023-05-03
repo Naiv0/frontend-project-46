@@ -3,9 +3,7 @@ import _ from 'lodash';
 
 const indent = (depth, spaceCount = 4) => ' '.repeat(depth * spaceCount - 2);
 
-const joinStrings = (str, depth) => {
-
-};
+const joinStrings = (lines, depth) => [`{${[...lines]}${indent(depth)}}`].join('\n');
 
 const stringify = (data, depth) => {
   if ((!_.isObject(data) || (data === null))) {
