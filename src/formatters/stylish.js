@@ -15,12 +15,10 @@ function stringify(data, depth) {
   }
   const keys = _.keys(data);
   const lines = keys.map((key) => `${indent(depth)}  ${stringify(data[key], depth + 1)}`);
-  console.log(lines);
   return joinStrings(lines, depth);
 }
 
 const makeStylish = (ast) => {
-  console.log('ast', ast);
   const iter = (node, depth = 0) => {
     switch (node.type) {
       case 'root': {
@@ -28,23 +26,19 @@ const makeStylish = (ast) => {
         return stringify(output);
       }
       case 'added': {
-        const output = `+ ${node.key}: ${node.value}`;
-        return stringify(output);
+        return `+ ${node.key}: ${stringify(node.value, depth)}`;
       }
 
       case 'deleted': {
-        const output = `- ${node.key}: ${node.value}`;
-        return stringify(output);
+        return `- ${node.key}: ${stringify(node.value, depth)}`;
       }
 
       case 'edited': {
-        const output = `- ${node.key}: ${node.value1}\n  + ${node.key}: ${node.value2}`;
-        return stringify(output);
+        return `- ${node.key}: ${stringify(node.value1, depth)}\n  + ${node.key}: ${stringify(node.value2, depth)}`;
       }
 
       case 'unchanged': {
-        const output = `  ${node.key}: ${node.value}`;
-        return stringify(output);
+        return `  ${node.key}: ${stringify(node.value, depth)}`;
       }
 
       case 'nested': {
