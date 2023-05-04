@@ -14,7 +14,8 @@ function stringify(data, depth) {
     return String(data);
   }
   const keys = _.keys(data);
-  const lines = keys.map((key) => `${indent(depth)}  ${stringify(data[key], depth + 1)}`);
+  const lines = keys.map((key) => `${indent(depth)}${stringify(data[key], depth + 1)}`);
+  console.log(lines);
   return joinStrings(lines, depth);
 }
 
@@ -26,24 +27,24 @@ const makeStylish = (ast) => {
         return stringify(output);
       }
       case 'added': {
-        return `+ ${node.key}: ${stringify(node.value, depth)}`;
+        return `${indent(depth)}+ ${node.key}: ${stringify(node.value, depth)}`;
       }
 
       case 'deleted': {
-        return `- ${node.key}: ${stringify(node.value, depth)}`;
+        return `${indent(depth)}- ${node.key}: ${stringify(node.value, depth)}`;
       }
 
       case 'edited': {
-        return `- ${node.key}: ${stringify(node.value1, depth)}\n  + ${node.key}: ${stringify(node.value2, depth)}`;
+        return `${indent(depth)}- ${node.key}: ${stringify(node.value1, depth)}\n${indent(depth)}+ ${node.key}: ${stringify(node.value2, depth)}`;
       }
 
       case 'unchanged': {
-        return `  ${node.key}: ${stringify(node.value, depth)}`;
+        return `${indent(depth)}  ${node.key}: ${stringify(node.value, depth)}`;
       }
 
       case 'nested': {
         const output = node.children.flatMap((child) => iter(child, depth + 1));
-        return stringify(output);
+        return `${indent(depth)}${node.key}: ${joinStrings(output, depth)}`;
       }
       default: {
         return console.log(111, node);
