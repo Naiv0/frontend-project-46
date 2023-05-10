@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import _ from 'lodash';
 
-const indent = (depth, spaceCount = 4) => ' '.repeat(depth * spaceCount - 2);
+const indent = (depth) => ' '.repeat(depth * 2);
 
 const joinStrings = (lines, depth) => [
   '{',
@@ -23,7 +23,7 @@ const makeStylish = (ast) => {
   const iter = (node, depth = 1) => {
     switch (node.type) {
       case 'root': {
-        const output = node.children.flatMap((child) => iter(child, depth + 1));
+        const output = node.children.flatMap((child) => iter(child, depth));
         return joinStrings(output, depth);
       }
       case 'added': {
