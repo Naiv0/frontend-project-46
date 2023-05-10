@@ -20,11 +20,11 @@ function stringify(data, depth) {
 }
 
 const makeStylish = (ast) => {
-  const iter = (node, depth = 0) => {
+  const iter = (node, depth = 1) => {
     switch (node.type) {
       case 'root': {
         const output = node.children.flatMap((child) => iter(child, depth + 1));
-        return stringify(output);
+        return joinStrings(output, depth);
       }
       case 'added': {
         return `${indent(depth)}+ ${node.key}: ${stringify(node.value, depth)}`;
@@ -44,7 +44,7 @@ const makeStylish = (ast) => {
 
       case 'nested': {
         const output = node.children.flatMap((child) => iter(child, depth + 1));
-        return `${indent(depth)}${node.key}: ${joinStrings(output, depth)}`;
+        return `${indent(depth)}${node.key}: ${joinStrings(output, depth + 1)}`;
       }
       default: {
         return console.log(111, node);
