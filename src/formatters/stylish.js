@@ -17,13 +17,13 @@ function stringify(data, depth) {
     return String(data);
   }
   const keys = _.keys(data);
-  const lines = keys.map((key) => `${forwardIndent(depth)}  ${key}: ${stringify(data[key], depth)}`);
+  const lines = keys.map((key) => `${forwardIndent(depth)}${key}: ${stringify(data[key], depth)}`);
   console.log(lines);
   return joinStrings(lines, depth);
 }
 
 const makeStylish = (ast) => {
-  const iter = (node, depth = 1) => {
+  const iter = (node, depth) => {
     switch (node.type) {
       case 'root': {
         const output = node.children.flatMap((child) => iter(child, depth));
@@ -50,12 +50,12 @@ const makeStylish = (ast) => {
         return `${forwardIndent(depth)}  ${node.key}: ${joinStrings(output, depth + 1)}`;
       }
       default: {
-        return console.log(111, node);
+        throw new Error('pipa');
       }
     }
   };
 
-  return iter(ast);
+  return iter(ast, 1);
 };
 
 export default makeStylish;
