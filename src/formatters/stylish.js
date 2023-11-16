@@ -3,8 +3,8 @@ import _ from 'lodash';
 
 const indent = ' ';
 const indentSize = 4;
-const forwardIndent = (depth) => indent.repeat(indentSize * depth - 2);
-const backIndent = (depth) => indent.repeat(indentSize * depth - indentSize);
+const forwardIndent = (depth) => indent.repeat((indentSize * depth) - 2);
+const backIndent = (depth) => indent.repeat((indentSize * depth) - indentSize);
 
 const joinStrings = (lines, depth) => [
   '{',
