@@ -1,12 +1,14 @@
 /* eslint-disable max-len */
 import _ from 'lodash';
 
-const indent = (depth) => ' '.repeat(depth * 2);
+const indent = ' ';
+const forwardIndent = (depth) => indent.repeat(depth * 2);
+const backIndent = (depth) => indent.repeat((depth * 2) - 2);
 
 const joinStrings = (lines, depth) => [
   '{',
   ...lines,
-  `${indent(depth)}}`,
+  `${backIndent(depth)}}`,
 ].join('\n');
 
 function stringify(data, depth) {
@@ -14,7 +16,7 @@ function stringify(data, depth) {
     return String(data);
   }
   const keys = _.keys(data);
-  const lines = keys.map((key) => `${indent(depth)}${stringify(data[key], depth + 1)}`);
+  const lines = keys.map((key) => `${forwardIndent(depth)}${key}: ${stringify(data[key], depth)}`);
   console.log(lines);
   return joinStrings(lines, depth);
 }
@@ -27,24 +29,24 @@ const makeStylish = (ast) => {
         return joinStrings(output, depth);
       }
       case 'added': {
-        return `${indent(depth)}+ ${node.key}: ${stringify(node.value, depth)}`;
+        return `${forwardIndent(depth)}+ ${node.key}: ${stringify(node.value, depth + 1)}`;
       }
 
       case 'deleted': {
-        return `${indent(depth)}- ${node.key}: ${stringify(node.value, depth)}`;
+        return `${forwardIndent(depth)}- ${node.key}: ${stringify(node.value, depth + 1)}`;
       }
 
       case 'edited': {
-        return `${indent(depth)}- ${node.key}: ${stringify(node.value1, depth)}\n${indent(depth)}+ ${node.key}: ${stringify(node.value2, depth)}`;
+        return `${forwardIndent(depth)}- ${node.key}: ${stringify(node.value1, depth + 1)}\n${forwardIndent(depth)}+ ${node.key}: ${stringify(node.value2, depth + 1)}`;
       }
 
       case 'unchanged': {
-        return `${indent(depth)}  ${node.key}: ${stringify(node.value, depth)}`;
+        return `${forwardIndent(depth)}  ${node.key}: ${stringify(node.value, depth + 1)}`;
       }
 
       case 'nested': {
         const output = node.children.flatMap((child) => iter(child, depth + 1));
-        return `${indent(depth)}${node.key}: ${joinStrings(output, depth + 1)}`;
+        return `${forwardIndent(depth)}${node.key}: ${joinStrings(output, depth + 1)}`;
       }
       default: {
         return console.log(111, node);
