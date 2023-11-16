@@ -2,8 +2,9 @@
 import _ from 'lodash';
 
 const indent = ' ';
-const forwardIndent = (depth) => indent.repeat(depth * 2);
-const backIndent = (depth) => indent.repeat((depth * 2) - 2);
+const indentSize = 4;
+const forwardIndent = (depth) => indent.repeat(indentSize * depth - 2);
+const backIndent = (depth) => indent.repeat(indentSize * depth - indentSize);
 
 const joinStrings = (lines, depth) => [
   '{',
