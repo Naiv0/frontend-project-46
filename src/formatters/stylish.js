@@ -17,7 +17,7 @@ function stringify(data, depth) {
     return String(data);
   }
   const keys = _.keys(data);
-  const lines = keys.map((key) => `${forwardIndent(depth)}  ${key}: ${stringify(data[key], depth)}`);
+  const lines = keys.map((key) => `${forwardIndent(depth)}  ${key}: ${stringify(data[key], depth + 1)}`);
   console.log(lines);
   return joinStrings(lines, depth);
 }
