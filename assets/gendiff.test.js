@@ -4,6 +4,7 @@ import { readFileSync } from 'fs';
 import { describe, test, expect } from '@jest/globals';
 import genDiff from '../src/index.js';
 import resultttt from '../__fixtures__/result.js';
+import flatOutput from '../__fixtures__/expected_flat.js';
 
 const fileNamee = fileURLToPath(import.meta.url);
 const dirName = path.dirname(fileNamee);
@@ -30,6 +31,13 @@ describe('genDiff', () => {
     const filePath2 = getFixturePath('filepath2.json');
     const treeResult = resultttt;
     const result = genDiff(filePath1, filePath2);
+    expect(result).toEqual(treeResult);
+  });
+  test('difference between trees flat', () => {
+    const filePath1 = getFixturePath('filepath1.json');
+    const filePath2 = getFixturePath('filepath2.json');
+    const treeResult = flatOutput;
+    const result = genDiff(filePath1, filePath2, 'plain');
     expect(result).toEqual(treeResult);
   });
 });
